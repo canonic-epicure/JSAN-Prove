@@ -33,7 +33,15 @@ our $VERSION = '0.01';
 # local deployment.
 
 __PACKAGE__->config(
-    name => 'JSAN::Prove' 
+    name => 'JSAN::Prove',
+    
+	'View::TT' => {
+		CATALYST_VAR => 'Catalyst',
+		INCLUDE_PATH => [        
+			__PACKAGE__->path_to( 'root', 'tt' )
+		],
+	}
+  
 );
 
 

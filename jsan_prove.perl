@@ -1,5 +1,6 @@
 {
 	name => 'JSAN::Prove',
 	
-	tests => [ 'yo.t.js' ]
+	title => 'Test suite title',
+	urls => [ 'yo.t.js' ]
 }
