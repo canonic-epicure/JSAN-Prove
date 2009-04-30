@@ -3,12 +3,16 @@
 	<head>
 		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">		
 		
-		<link rel="stylesheet" type="text/css" href="/ext/resources/css/ext-all.css">
-		<script type="text/javascript" src="/ext/ext-custom.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/ExtJS/css/ext-all.css">
+		<script type="text/javascript" src="/inc/Task/ExtJS/Full/JooseBridge.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/Test/Run/css/all.css"></link>
+		<script type="text/javascript" src="/inc/ExtX/Reference/Slot.js"></script>
+		<script type="text/javascript" src="/inc/Bundle/Test/Run.js"></script>
+		
 		
 		<script type="text/javascript">
 			Test.Run.Harness.Browser.Multi.my.configure({
-				title : [% title %]
+				title : '[% title %]'
 			});
 			
 			Test.Run.Harness.Browser.Multi.my.start(

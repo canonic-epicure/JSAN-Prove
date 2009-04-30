@@ -32,7 +32,11 @@ our $VERSION = '0.01';
 # with a external configuration file acting as an override for
 # local deployment.
 
+use Config;
+
 __PACKAGE__->config(
+	JSAN_LIB => $ENV{JSAN_LIB} || (split /\s+/, $Config{'libspath'})[1] . '/jsan',
+
     name => 'JSAN::Prove',
     
 	'View::TT' => {
