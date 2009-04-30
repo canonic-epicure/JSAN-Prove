@@ -26,11 +26,15 @@ JSAN::Prove::Controller::Root - Root Controller for JSAN::Prove
 
 =cut
 
+use Data::Dump qw(dump ddx);
+
+
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
     # Hello World
-    $c->response->body( $c->welcome_message );
+    $c->response->body( dump(JSAN::Prove->config) );
+    $c->engine->stop(1);
 }
 
 sub default :Path {

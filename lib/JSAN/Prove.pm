@@ -14,9 +14,13 @@ use Catalyst::Runtime '5.70';
 #                 directory
 
 use parent qw/Catalyst/;
-use Catalyst qw/-Debug
-                ConfigLoader
-                Static::Simple/;
+
+use Catalyst qw/
+    -Debug
+    ConfigLoader
+    Static::Simple
+/;
+
 our $VERSION = '0.01';
 
 # Configure the application. 
@@ -28,7 +32,10 @@ our $VERSION = '0.01';
 # with a external configuration file acting as an override for
 # local deployment.
 
-__PACKAGE__->config( name => 'JSAN::Prove' );
+__PACKAGE__->config(
+    name => 'JSAN::Prove' 
+);
+
 
 # Start the application
 __PACKAGE__->setup();

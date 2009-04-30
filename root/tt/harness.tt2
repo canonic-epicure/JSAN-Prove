@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+	<head>
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">		
+		
+		<link rel="stylesheet" type="text/css" href="/ext/resources/css/ext-all.css">
+		<script type="text/javascript" src="/ext/ext-custom.js"></script>
+		
+		<script type="text/javascript">
+			Test.Run.Harness.Browser.Multi.my.configure({
+				title : 'Cool test suite'
+			});
+			
+			Test.Run.Harness.Browser.Multi.my.start(
+				'simple1.t.js',
+				'simple2.t.js',
+				'simple3.t.js'
+			)
+		</script>
+
+	</head>
+	
+	<body>
+	</body>
+</html>

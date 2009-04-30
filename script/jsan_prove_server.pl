@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 BEGIN { 
-    $ENV{CATALYST_ENGINE} ||= 'HTTP';
+    $ENV{CATALYST_ENGINE} ||= 'HTTP::Stopable';
     $ENV{CATALYST_SCRIPT_GEN} = 31;
     require Catalyst::Engine::HTTP;
 }  
@@ -54,7 +54,7 @@ if ( $debug ) {
 # variables can be set at runtime.
 require JSAN::Prove;
 
-JSAN::Prove->run( $port, $host, {
+my $result = JSAN::Prove->run( $port, $host, {
     argv              => \@argv,
     'fork'            => $fork,
     keepalive         => $keepalive,
@@ -65,7 +65,7 @@ JSAN::Prove->run( $port, $host, {
     follow_symlinks   => $follow_symlinks,
 } );
 
-1;
+exit($result);
 
 =head1 NAME
 
