@@ -5,14 +5,22 @@
 		
 		<link rel="stylesheet" type="text/css" href="/static/ExtJS/css/ext-all.css">
 		<script type="text/javascript" src="/inc/Task/ExtJS/Full/JooseBridge.js"></script>
-		<link rel="stylesheet" type="text/css" href="/static/Test/Run/css/all.css"></link>
 		<script type="text/javascript" src="/inc/ExtX/Reference/Slot.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="/static/Test/Run/css/all.css"></link>
 		<script type="text/javascript" src="/inc/Bundle/Test/Run.js"></script>
+		
+		<script type="text/javascript">
+			Test.Run.Harness.Browser.Multi.meta.extend({
+				does : [ Test.Run.Harness.Browser.Proven ]
+			});
+		</script>
 		
 		
 		<script type="text/javascript">
 			Test.Run.Harness.Browser.Multi.my.configure({
-				title : '[% title %]'
+				title : '[% title %]',
+				browser : '[% browser %]'
 			});
 			
 			Test.Run.Harness.Browser.Multi.my.start(

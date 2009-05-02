@@ -35,6 +35,8 @@ our $VERSION = '0.01';
 use Config;
 
 __PACKAGE__->config(
+	BROWSERS => [ split("\n", $ENV{JSAN_PROVE_BROWSERS}) ],
+
 	JSAN_LIB => $ENV{JSAN_LIB} || (split /\s+/, $Config{'libspath'})[1] . '/jsan',
 
     name => 'JSAN::Prove',
@@ -51,6 +53,27 @@ __PACKAGE__->config(
 
 # Start the application
 __PACKAGE__->setup();
+
+our $BROWSERS = {};
+
+sub on_engine_started {
+	my ($self, $url) = @_;
+	
+	foreach my $browser (@{__PACKAGE__->config->{BROWSERS}}) {
+		my $class_name = 'JSAN::Prove::App::Browser::' . $browser;
+		eval "require $class_name";
+		
+		$BROWSERS->{$browser} = $class_name->new();
+		$BROWSERS->{$browser}->start($url . "/prove/$browser");
+	}
+}
+
+
+sub stop_browser {
+	my ($self, $browser) = @_;
+	
+	$BROWSERS->{$browser}->stop();
+}
 
 
 =head1 NAME

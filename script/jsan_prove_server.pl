@@ -13,6 +13,10 @@ use Pod::Usage;
 use FindBin;
 use lib "$FindBin::Bin/../lib";
 
+use File::Find::Rule;
+use Path::Class;
+
+
 my $debug             = 0;
 my $fork              = 0;
 my $help              = 0;
@@ -24,6 +28,9 @@ my $restart_delay     = 1;
 my $restart_regex     = '(?:/|^)(?!\.#).+(?:\.yml$|\.yaml$|\.conf|\.pm)$';
 my $restart_directory = undef;
 my $follow_symlinks   = 0;
+
+my @preload 		  = ();
+my @browsers 		  = ();		
 
 my @argv = @ARGV;
 
@@ -39,6 +46,9 @@ GetOptions(
     'restartregex|rr=s'   => \$restart_regex,
     'restartdirectory=s@' => \$restart_directory,
     'followsymlinks'      => \$follow_symlinks,
+    
+    'preload|p=s'	      => \@preload,
+    'browser|b=s'	      => \@browsers,
 );
 
 pod2usage(1) if $help;
@@ -49,6 +59,25 @@ if ( $restart && $ENV{CATALYST_ENGINE} eq 'HTTP' ) {
 if ( $debug ) {
     $ENV{CATALYST_DEBUG} = 1;
 }
+
+
+#================================================================================================================================================================================================================================================
+#================================================================================================================================================================================================================================================
+my @tests = @ARGV;
+
+if (!@tests) {
+	@tests = sort File::Find::Rule->file->name('*.js')->in(dir('t'));
+	
+	die "No tests found\n" unless @tests;
+	
+	@tests = map { file($_)->relative() } @tests;
+}
+
+$ENV{JSAN_PROVE_TESTS} = join "\n", @tests;
+$ENV{JSAN_PROVE_PRELOAD} = join "\n", @preload;
+$ENV{JSAN_PROVE_BROWSERS} = join "\n", @browsers;
+$ENV{CATALYST_ENGINE} = 'HTTP::Stopable';
+
 
 # This is require instead of use so that the above environment
 # variables can be set at runtime.
@@ -63,7 +92,7 @@ my $result = JSAN::Prove->run( $port, $host, {
     restart_regex     => qr/$restart_regex/,
     restart_directory => $restart_directory,
     follow_symlinks   => $follow_symlinks,
-} );
+});
 
 exit($result);
 
