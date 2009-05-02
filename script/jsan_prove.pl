@@ -75,18 +75,18 @@ if (!@tests) {
 	@tests = map { file($_)->relative() } @tests;
 } 
 
+$ENV{JSAN_PROVE_PORT} = $port;
 $ENV{JSAN_PROVE_TITLE} = $title;
 $ENV{JSAN_PROVE_TESTS} = join "\n", @tests;
 $ENV{JSAN_PROVE_PRELOAD} = join "\n", @preload;
 $ENV{JSAN_PROVE_BROWSERS} = join "\n", @browsers;
-$ENV{CATALYST_ENGINE} = 'HTTP::Stopable';
 
 
 # This is require instead of use so that the above environment
 # variables can be set at runtime.
 require JSAN::Prove;
 
-my $result = JSAN::Prove->run( $port, $host, {
+JSAN::Prove->run( $port, $host, {
     argv              => \@argv,
     'fork'            => $fork,
     keepalive         => $keepalive,
@@ -97,7 +97,6 @@ my $result = JSAN::Prove->run( $port, $host, {
     follow_symlinks   => $follow_symlinks,
 });
 
-exit($result);
 
 =head1 NAME
 

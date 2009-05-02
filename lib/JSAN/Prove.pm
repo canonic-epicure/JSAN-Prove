@@ -33,13 +33,14 @@ our $VERSION = '0.01';
 # local deployment.
 
 use Config;
+use URI;
 
 __PACKAGE__->config(
 	title => $ENV{JSAN_PROVE_TITLE},
 	
 	browsers => [ split("\n", $ENV{JSAN_PROVE_BROWSERS}) ],
 	
-	urls => [ split("\n", $ENV{JSAN_PROVE_TESTS}) ],
+	urls => [ map { URI->new($_)->abs('/local/')->as_string() } split("\n", $ENV{JSAN_PROVE_TESTS}) ],
 
 	JSAN_LIB => $ENV{JSAN_LIB} || (split /\s+/, $Config{'libspath'})[1] . '/jsan',
 
@@ -58,26 +59,33 @@ __PACKAGE__->config(
 # Start the application
 __PACKAGE__->setup();
 
-our $BROWSERS = {};
 
-sub on_engine_started {
-	my ($self, $url) = @_;
+sub get_self_url {
+	require Sys::Hostname;
+        
+    my $host = lc Sys::Hostname::hostname();
+    my $port = $ENV{JSAN_PROVE_PORT};
+        
+	my $url = "http://$host";
+	$url .= ":$port" unless $port == 80;
 	
-	foreach my $browser (@{__PACKAGE__->config->{browsers}}) {
-		my $class_name = 'JSAN::Prove::App::Browser::' . $browser;
-		eval "require $class_name";
-		
-		$BROWSERS->{$browser} = $class_name->new();
-		$BROWSERS->{$browser}->start($url . "/prove/$browser");
-	}
+	return $url;
 }
 
 
-sub stop_browser {
-	my ($self, $browser) = @_;
+sub run {
+	my ($self, @args) = @_;
 	
-	$BROWSERS->{$browser}->stop();
+	unless (fork) {
+		sleep(1);
+		
+		require LWP::Simple;
+		LWP::Simple::get($self->get_self_url . '/start');
+		
+		exit;
+	}
 	
+	$self->SUPER::run(@args);
 }
 
 
