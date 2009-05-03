@@ -28,6 +28,7 @@ JSAN::Prove::Controller::Root - Root Controller for JSAN::Prove
 
 use Data::Dump qw(dump);
 use Path::Class;
+use JSAN::Prove::App;
 
 use Moose;
 
@@ -39,7 +40,9 @@ has 'browsers' => ( is => 'rw' );
 #================================================================================================================================================================================================================================================
 #================================================================================================================================================================================================================================================
 sub index :Path {
-	my ( $self, $c, @captures ) = @_;
+	my ( $self, $c ) = @_;
+	
+	$c->response->body( 'index' );
 }
 
 
@@ -113,15 +116,9 @@ sub start :Local {
     
 	my $url = $c->get_self_url;
 	
-	$self->browsers({});
+	$self->browsers(JSAN::Prove::App->start_browsers($url . "/prove/$browser");
 	
-	foreach my $browser (@{$c->config->{browsers}}) {
-		my $class_name = 'JSAN::Prove::App::Browser::' . $browser;
-		eval "require $class_name";
-		
-		$self->browsers->{$browser} = $class_name->new();
-		$self->browsers->{$browser}->start($url . "/prove/$browser");
-	}
+	die "No browsers were able to start on this platform" unless @{$self->browsers};
 	
 	$c->response->body('started');
 }

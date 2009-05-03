@@ -30,7 +30,6 @@ my $restart_directory = undef;
 my $follow_symlinks   = 0;
 
 my @preload 		  = ();
-my @browsers 		  = ();		
 my $title			  = 'Test suite';
 
 my @argv = @ARGV;
@@ -49,7 +48,6 @@ GetOptions(
     'followsymlinks'      => \$follow_symlinks,
     
     'preload|p=s'	      => \@preload,
-    'browser|b=s'	      => \@browsers,
     'title=s'	      	  => \$title,
 );
 
@@ -79,7 +77,6 @@ $ENV{JSAN_PROVE_PORT} = $port;
 $ENV{JSAN_PROVE_TITLE} = $title;
 $ENV{JSAN_PROVE_TESTS} = join "\n", @tests;
 $ENV{JSAN_PROVE_PRELOAD} = join "\n", @preload;
-$ENV{JSAN_PROVE_BROWSERS} = join "\n", @browsers;
 
 
 # This is require instead of use so that the above environment

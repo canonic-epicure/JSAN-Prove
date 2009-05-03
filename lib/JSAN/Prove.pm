@@ -34,15 +34,15 @@ our $VERSION = '0.01';
 
 use Config;
 use URI;
+use lib "$ENV{HOME}/Workspace/EclipseWorkspace/JSAN/module-build-jsan/lib";
+use Module::Build::JSAN;
 
 __PACKAGE__->config(
 	title => $ENV{JSAN_PROVE_TITLE},
 	
-	browsers => [ split("\n", $ENV{JSAN_PROVE_BROWSERS}) ],
-	
 	urls => [ map { URI->new($_)->abs('/local/')->as_string() } split("\n", $ENV{JSAN_PROVE_TESTS}) ],
 
-	JSAN_LIB => $ENV{JSAN_LIB} || (split /\s+/, $Config{'libspath'})[1] . '/jsan',
+	JSAN_LIB => Module::Build::JSAN::get_jsan_libroot(),
 
     name => 'JSAN::Prove',
     
