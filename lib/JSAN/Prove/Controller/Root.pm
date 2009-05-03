@@ -34,7 +34,7 @@ use Moose;
 
 has 'is_passed' => ( is => 'rw', default => 1 );
 
-has 'browsers' => ( is => 'rw' );
+has 'app' => (is => 'rw');
 
 
 #================================================================================================================================================================================================================================================
@@ -74,10 +74,12 @@ sub prove :Local :Args(1) {
 sub proven :Local :Args(2) {
     my ( $self, $c, $browser, $result ) = @_;
 	
-	$self->{is_passed} &&= $result eq 'pass' ? 1 : 0; 
-	my $running = $self->stop_browser($browser);
+	$self->{is_passed} &&= $result eq 'pass' ? 1 : 0;
 	
-	if ($running) {
+	my $app = $self->app; 
+	$app->stop_browser($browser);
+	
+	if ($app->is_running) {
 		$c->response->body( $result );
 	} else {
 		exit($self->is_passed);
@@ -116,28 +118,13 @@ sub start :Local {
     
 	my $url = $c->get_self_url;
 	
-	$self->browsers(JSAN::Prove::App->start_browsers($url . "/prove/$browser");
-	
-	die "No browsers were able to start on this platform" unless @{$self->browsers};
+	$self->app( JSAN::Prove::App->new );
+	$self->app->start_browsers($url);
 	
 	$c->response->body('started');
 }
 
 
-#================================================================================================================================================================================================================================================
-#================================================================================================================================================================================================================================================
-sub stop_browser {
-	my ($self, $browser) = @_;
-	
-	$self->browsers->{$browser}->stop();
-	
-	my $running = 0;
-	foreach (values(%{$self->browsers})) {
-		$running = 1 if $_->proc->alive;
-	}
-	
-	return $running;
-}
 
 
 =head2 end
