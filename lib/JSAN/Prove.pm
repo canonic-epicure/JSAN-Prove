@@ -40,7 +40,7 @@ use Module::Build::JSAN;
 __PACKAGE__->config(
 	title => $ENV{JSAN_PROVE_TITLE},
 	
-	urls => [ map { URI->new($_)->abs('/local/')->as_string() } split("\n", $ENV{JSAN_PROVE_TESTS}) ],
+	urls => [ map { URI->new($_)->abs('/local/')->as_string() } split("\n", $ENV{JSAN_PROVE_TESTS} || '') ],
 
 	JSAN_LIB => Module::Build::JSAN::get_jsan_libroot(),
 
