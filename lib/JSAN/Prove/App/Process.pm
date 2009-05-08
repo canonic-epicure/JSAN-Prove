@@ -25,7 +25,7 @@ sub kill_by_name {
 
 #================================================================================================================================================================================================================================================
 sub get_name_pid_hash {
-	if($^O eq 'MSWin32') {
+	if ($^O eq 'MSWin32') {
 		return Win32::Process::List->new->GetProcesses;
 	} else {
 	    my $process_list = Proc::ProcessTable->new->table;
@@ -44,7 +44,7 @@ sub get_name_pid_hash {
 sub kill_by_pid {
 	my ($self, $pid) = @_;
 	
-	if($^O eq 'MSWin32') {
+	if ($^O eq 'MSWin32') {
 		my $exit_code;
 		
 		return Win32::Process::KillProcess($pid, $exit_code)
