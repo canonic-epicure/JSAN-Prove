@@ -13,8 +13,8 @@ use Pod::Usage;
 use FindBin;
 use lib "$FindBin::Bin/../lib";
 
-use File::Find::Rule;
-use Path::Class;
+#use File::Find::Rule;
+#use Path::Class;
 
 
 my $debug             = 0;
@@ -29,8 +29,8 @@ my $restart_regex     = '(?:/|^)(?!\.#).+(?:\.yml$|\.yaml$|\.conf|\.pm)$';
 my $restart_directory = undef;
 my $follow_symlinks   = 0;
 
-my @preload 		  = ();
-my $title			  = 'Test suite';
+#my @preload 		  = ();
+#my $title			  = 'Test suite';
 
 my @argv = @ARGV;
 
@@ -47,8 +47,8 @@ GetOptions(
     'restartdirectory=s@' => \$restart_directory,
     'followsymlinks'      => \$follow_symlinks,
     
-    'preload|p=s'	      => \@preload,
-    'title=s'	      	  => \$title,
+#    'preload|p=s'	      => \@preload,
+#    'title=s'	      	  => \$title,
 );
 
 pod2usage(1) if $help;
@@ -62,21 +62,20 @@ if ( $debug ) {
 
 
 #================================================================================================================================================================================================================================================
-#================================================================================================================================================================================================================================================
-my @tests = @ARGV;
-
-if (!@tests) {
-	@tests = sort File::Find::Rule->file->name('*.js')->in(dir('t'));
-	
-	die "No tests found\n" unless @tests;
-	
-	@tests = map { file($_)->relative() } @tests;
-} 
+#my @tests = @ARGV;
+#
+#if (!@tests) {
+#	@tests = sort File::Find::Rule->file->name('*.js')->in(dir('t'));
+#	
+#	die "No tests found\n" unless @tests;
+#	
+#	@tests = map { file($_)->relative() } @tests;
+#} 
 
 $ENV{JSAN_PROVE_PORT} = $port;
-$ENV{JSAN_PROVE_TITLE} = $title;
-$ENV{JSAN_PROVE_TESTS} = join "\n", @tests;
-$ENV{JSAN_PROVE_PRELOAD} = join "\n", @preload;
+#$ENV{JSAN_PROVE_TITLE} = $title;
+#$ENV{JSAN_PROVE_TESTS} = join "\n", @tests;
+#$ENV{JSAN_PROVE_PRELOAD} = join "\n", @preload;
 
 
 # This is require instead of use so that the above environment

@@ -38,9 +38,9 @@ use lib "$ENV{HOME}/Workspace/EclipseWorkspace/JSAN/module-build-jsan/lib";
 use Module::Build::JSAN;
 
 __PACKAGE__->config(
-	title => $ENV{JSAN_PROVE_TITLE},
-	
-	urls => [ map { URI->new($_)->abs('/local/')->as_string() } split("\n", $ENV{JSAN_PROVE_TESTS} || '') ],
+#	title => $ENV{JSAN_PROVE_TITLE},
+#	
+#	urls => [ map { URI->new($_)->abs('/local/')->as_string() } split("\n", $ENV{JSAN_PROVE_TESTS} || '') ],
 
 	JSAN_LIB => Module::Build::JSAN::get_jsan_libroot(),
 
@@ -60,6 +60,7 @@ __PACKAGE__->config(
 __PACKAGE__->setup();
 
 
+#================================================================================================================================================================================================================================================
 sub get_self_url {
 	require Sys::Hostname;
         
@@ -73,6 +74,7 @@ sub get_self_url {
 }
 
 
+#================================================================================================================================================================================================================================================
 sub run {
 	my ($self, @args) = @_;
 	
