@@ -10,11 +10,12 @@ use Path::Class;
 
 
 #================================================================================================================================================================================================================================================
-sub get_exe_path {
+sub get_exe_args {
 	my ($self, $url) = @_;
 	
 	my $file = file(File::HomeDir->my_home, 'Local Settings', 'Application Data', 'Google', 'Chrome', 'Application', 'chrome.exe');
-	return "$file $url";
+	
+	return ($file . '', $url);
 }
 
 

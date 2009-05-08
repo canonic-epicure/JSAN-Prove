@@ -6,10 +6,14 @@ extends 'JSAN::Prove::App::Browser';
 use JSAN::Prove::App::Process;
 
 
+
 #================================================================================================================================================================================================================================================
-sub get_exe_path {
+sub get_exe_args {
 	my ($self, $url) = @_;
-	return "firefox -new-window $url";
+	
+	return ('C:\\Program Files\\Mozilla Firefox\\firefox.exe', $url) if $^O eq 'MSWin32';
+	
+	return ("firefox -new-window $url");
 }
 
 

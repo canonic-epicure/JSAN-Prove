@@ -31,10 +31,10 @@ sub is_alive {
 
 
 #================================================================================================================================================================================================================================================
-sub get_exe_path {
+sub get_exe_args {
 	my ($self, $url) = @_;
 	
-	die "Abstract method get_exe_path was called";
+	die "Abstract method get_exe_args was called";
 }
 
 
@@ -44,7 +44,7 @@ sub start {
     
     $self->kill_all_sibling;
     
-    $self->proc(Proc::Background->new($self->get_exe_path($url)));
+    $self->proc(Proc::Background->new($self->get_exe_args($url)));
     
     $self->proc;
 }

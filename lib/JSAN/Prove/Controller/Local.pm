@@ -9,7 +9,7 @@ use Path::Class;
 #================================================================================================================================================================================================================================================
 sub index :Path {
     my ( $self, $c, @captures ) = @_;
-	$c->serve_static_file(file('.', @captures));
+	$c->serve_static_file(file(@captures));
 }
 
 
@@ -29,7 +29,7 @@ sub index :Path {
 #		return;
 #	}
 #	
-#	$c->serve_static_file(file('.', 't', @captures));
+#	$c->serve_static_file(file('t', @captures));
 #}
 
 
