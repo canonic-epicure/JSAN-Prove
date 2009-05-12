@@ -12,6 +12,20 @@ requires 'Catalyst::Action::RenderView';
 requires 'parent';
 requires 'Config::General'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
+                 
+requires 'URI';
+requires 'Module::Build::JSAN';
+requires 'Proc::Exists';
+requires 'Proc::Background';
+
+if ( $^O eq 'MSWin32' ) {
+    requires Win32::Process::List;
+    requires Win32::Process;
+} else {
+	requires Proc::ProcessTable;
+}
+
+                 
 catalyst;
 
 install_script glob('script/jsan-prove');
