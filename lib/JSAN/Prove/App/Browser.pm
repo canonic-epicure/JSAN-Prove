@@ -7,9 +7,9 @@ use JSAN::Prove::App::Process;
 
 
 #================================================================================================================================================================================================================================================
-has 'proc' => (
-	is => 'rw'
-);
+has 'proc' => ( is => 'rw' );
+
+has 'is_running';
 
 
 
@@ -26,7 +26,9 @@ sub is_startable {
 sub is_alive {
 	my ($self) = @_;
 	
-	return $self->proc && $self->proc->alive;
+#	return $self->proc && $self->proc->alive;
+
+	return $self->{is_running};
 }
 
 
@@ -46,6 +48,8 @@ sub start {
     
     $self->proc(Proc::Background->new($self->get_exe_args($url)));
     
+    $self->{is_running} = 1;
+    
     $self->proc;
 }
 
@@ -54,7 +58,9 @@ sub start {
 sub stop {
     my $self = shift;
     
-    return $self->proc->die() if $self->proc;
+    $self->{is_running} = 0;
+    
+#    return $self->proc->die() if $self->proc;
     
     return undef;
 }

@@ -38,12 +38,11 @@ sub stop_browser {
 sub is_running {
 	my ($self) = @_;
 	
-	my $running = 0;
 	foreach (values(%{$self->browsers})) {
-		$running = 1 if $_->is_alive;
+		return 1 if $_->is_alive;
 	}
 	
-	return $running;
+	return 0;
 }
 
 

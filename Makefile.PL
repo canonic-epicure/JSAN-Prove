@@ -15,5 +15,7 @@ requires 'Config::General'; # This should reflect the config file format you've 
 catalyst;
 
 install_script glob('script/jsan-prove');
+install_script glob('script/jsan-prove-starter');
+
 auto_install;
 WriteAll;

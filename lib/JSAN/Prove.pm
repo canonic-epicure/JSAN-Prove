@@ -75,20 +75,19 @@ sub get_self_url {
 
 
 #================================================================================================================================================================================================================================================
-sub run {
-	my ($self, @args) = @_;
-	
-	unless (fork) {
-		sleep(1);
-		
-		require LWP::Simple;
-		LWP::Simple::get($self->get_self_url . '/start');
-		
-		exit;
-	}
-	
-	$self->SUPER::run(@args);
-}
+#sub run {
+#	my ($self, @args) = @_;
+#	
+##	unless (fork) {
+##		sleep(1);
+##		
+##		my $start_url = $self->get_self_url . '/start';
+##		
+##		system ("lwp-request $start_url");
+##	} else {
+#		$self->SUPER::run(@args);
+##	}
+#}
 
 
 =head1 NAME

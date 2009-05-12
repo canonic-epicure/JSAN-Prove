@@ -13,6 +13,8 @@ use Pod::Usage;
 use FindBin;
 use lib "$FindBin::Bin/../lib";
 
+use Proc::Background;
+
 #use File::Find::Rule;
 #use Path::Class;
 
@@ -78,6 +80,8 @@ $ENV{JSAN_PROVE_PORT} = $port;
 #$ENV{JSAN_PROVE_PRELOAD} = join "\n", @preload;
 
 
+Proc::Background->new($^O eq 'MSWin32' ? 'jsan-prove-starter.bat' : 'jsan-prove-starter');
+
 # This is require instead of use so that the above environment
 # variables can be set at runtime.
 require JSAN::Prove;
@@ -92,7 +96,6 @@ JSAN::Prove->run( $port, $host, {
     restart_directory => $restart_directory,
     follow_symlinks   => $follow_symlinks,
 });
-
 
 =head1 NAME
 

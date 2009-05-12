@@ -1,0 +1,22 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+
+use Getopt::Long;
+
+my $pause             = 2;
+
+GetOptions(
+    'pause|p'             => \$pause,
+);
+
+require JSAN::Prove;
+use LWP::Simple;
+
+sleep($pause);
+
+LWP::Simple::get(JSAN::Prove->get_self_url . '/start');
